@@ -20,6 +20,8 @@ let countdownIntervalId = null;
 // Initialize the new tab page
 async function initNewTab() {
   try {
+    await initStyles();
+
     // First try to get the environment setting
     const { environment } = await chrome.storage.local.get("environment");
     const baseUrl =
@@ -92,6 +94,42 @@ async function initNewTab() {
         : "https://usetrmnl.com";
     window.location.href = `${baseUrl}/login`;
   }
+}
+
+async function initStyles() {
+  document.body.classList.add("css-transitions-only-after-page-load")
+  setTimeout(() => document.body.classList.remove("css-transitions-only-after-page-load"), 32);
+
+  const updateStyles = async () => {
+    const remove = (prefix) => {
+      document.body.classList.remove(
+        ...Array.from(document.body.classList).filter((cls) =>
+          cls.startsWith(prefix),
+        ),
+      );
+    }
+
+    const { displayStyles } = await chrome.storage.local.get("displayStyles");
+    
+    remove("style-ui--");
+    remove("style-screen--");
+    remove("style-dimming--");
+
+    if(displayStyles) {
+      const { uiStyle, screenStyle, dimmingStyle } = displayStyles;
+
+      document.body.classList.add(`style-ui--${uiStyle || "auto"}`);
+      document.body.classList.add(`style-screen--${screenStyle || "auto-system"}`);
+      document.body.classList.add(`style-dimming--${dimmingStyle || "until-hover"}`);
+    }
+  }
+
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if(message.action === "reloadStyles")
+      updateStyles();
+  })
+
+  await updateStyles();
 }
 
 // Set up event listeners
