@@ -100,20 +100,15 @@ async function initStyles() {
   document.body.classList.add("css-transitions-only-after-page-load")
   setTimeout(() => document.body.classList.remove("css-transitions-only-after-page-load"), 32);
 
+  const removeClassByPrefix = (prefix) => document.body.classList.remove(...Array.from(document.body.classList).filter(cls => cls.startsWith(prefix)));
+
   const updateStyles = async () => {
-    const remove = (prefix) => {
-      document.body.classList.remove(
-        ...Array.from(document.body.classList).filter((cls) =>
-          cls.startsWith(prefix),
-        ),
-      );
-    }
 
     const { displayStyles } = await chrome.storage.local.get("displayStyles");
-    
-    remove("style-ui--");
-    remove("style-screen--");
-    remove("style-dimming--");
+
+    removeClassByPrefix("style-ui--");
+    removeClassByPrefix("style-screen--");
+    removeClassByPrefix("style-dimming--");
 
     if(displayStyles) {
       const { uiStyle, screenStyle, dimmingStyle } = displayStyles;
