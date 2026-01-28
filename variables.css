@@ -1,5 +1,5 @@
 /* User interface style variables */
-.style-ui--light {
+.style-ui--auto, .style-ui--light {
     --ui-bg-color: #f0f0f0;
     --ui-shadow-color: black;
 }
@@ -17,7 +17,7 @@
 }
 
 /* Screen style variables */
-.style-screen--light {
+.style-screen--auto-system, .style-screen--light {
     --screen-dim-filter:  sepia(20%) contrast(0.9);
     --screen-full-filter: sepia(10%) contrast(1);
 }
