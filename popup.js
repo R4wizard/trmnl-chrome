@@ -46,7 +46,7 @@ async function loadDevices() {
     const apiUrl =
       environment === "development"
         ? "http://localhost:3000/devices.json"
-        : "https://usetrmnl.com/devices.json";
+        : "https://trmnl.com/devices.json";
 
     try {
       const response = await fetch(apiUrl);

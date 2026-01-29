@@ -27,7 +27,7 @@ async function initNewTab() {
     const baseUrl =
       environment === "development"
         ? "http://localhost:3000"
-        : "https://usetrmnl.com";
+        : "https://trmnl.com";
 
     // Try to get devices from local storage first
     const { devices: storedDevices } =
@@ -91,7 +91,7 @@ async function initNewTab() {
     const baseUrl =
       environment === "development"
         ? "http://localhost:3000"
-        : "https://usetrmnl.com";
+        : "https://trmnl.com";
     window.location.href = `${baseUrl}/login`;
   }
 }
